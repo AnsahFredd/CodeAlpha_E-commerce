@@ -1,5 +1,5 @@
 // src/components/common/ErrorMessage.tsx
-import { AlertCircle } from "lucide-react";
+import { AlertCircle } from 'lucide-react';
 
 interface ErrorMessageProps {
   message: string;
@@ -9,7 +9,7 @@ interface ErrorMessageProps {
 
 export const ErrorMessage = ({
   message,
-  className = "",
+  className = '',
   id,
 }: ErrorMessageProps) => {
   if (!message) return null;
@@ -17,10 +17,10 @@ export const ErrorMessage = ({
   return (
     <div
       id={id}
-      className={`flex items-center gap-2 text-sm text-red-600 mt-1 ${className}`}
+      className={`mt-1 flex items-center gap-2 text-sm text-red-600 ${className}`}
       role="alert"
     >
-      <AlertCircle className="w-4 h-4 shrink-0" />
+      <AlertCircle className="h-4 w-4 shrink-0" />
       <span>{message}</span>
     </div>
   );

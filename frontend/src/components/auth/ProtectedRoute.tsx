@@ -1,10 +1,11 @@
 // src/components/auth/ProtectedRoute.tsx
-import { Navigate } from "react-router-dom";
-import { useAuth } from "src/context/AuthContext";
-import { ROUTES } from "src/constants/routes";
+import type { ReactNode } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from 'src/context/AuthContext';
+import { ROUTES } from 'src/constants';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {

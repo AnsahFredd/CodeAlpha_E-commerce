@@ -1,9 +1,13 @@
-import { useState, FormEvent } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useState, type FormEvent } from 'react';
+import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { ROUTES } from '../constants';
 import {
   validateEmail,
   validatePassword,
-} from "../utils/validation/authValidation";
+} from '../utils/validation/authValidation';
+import { authService } from '../services/auth.service';
 
 interface UseLoginFormReturn {
   email: string;
@@ -22,8 +26,8 @@ interface UseLoginFormReturn {
 }
 
 export const useLoginForm = (): UseLoginFormReturn => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
@@ -33,6 +37,7 @@ export const useLoginForm = (): UseLoginFormReturn => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const validate = () => {
     const emailError = validateEmail(email);
@@ -64,18 +69,17 @@ export const useLoginForm = (): UseLoginFormReturn => {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await authService.login({ email, password });
+      login(response.user, response.token);
+      navigate(ROUTES.HOME);
+    } catch (error) {
+      let message = 'Invalid email or password';
 
-      // Mock successful login
-      const mockUser = {
-        name: "Test User",
-        email: email,
-      };
+      if (isAxiosError(error)) {
+        message = error.response?.data?.message || message;
+      }
 
-      login(mockUser);
-    } catch (err) {
-      setApiError("Invalid email or password");
+      setApiError(message);
     } finally {
       setIsLoading(false);
     }

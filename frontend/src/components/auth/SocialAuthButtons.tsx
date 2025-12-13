@@ -1,5 +1,5 @@
 // src/components/auth/SocialAuthButtons.tsx
-import { useState } from "react";
+import { useState } from 'react';
 
 interface SocialAuthButtonsProps {
   onGoogleAuth?: () => void;
@@ -20,9 +20,9 @@ export const SocialAuthButtons = ({
       if (onGoogleAuth) {
         onGoogleAuth();
       }
-      console.log("Google authentication initiated");
+      console.log('Google authentication initiated');
     } catch (error) {
-      console.error("Google auth failed:", error);
+      console.error('Google auth failed:', error);
     } finally {
       setIsGoogleLoading(false);
     }
@@ -35,9 +35,9 @@ export const SocialAuthButtons = ({
       if (onFacebookAuth) {
         onFacebookAuth();
       }
-      console.log("Facebook authentication initiated");
+      console.log('Facebook authentication initiated');
     } catch (error) {
-      console.error("Facebook auth failed:", error);
+      console.error('Facebook auth failed:', error);
     } finally {
       setIsFacebookLoading(false);
     }
@@ -81,7 +81,7 @@ export const SocialAuthButtons = ({
               fill="#EA4335"
             />
           </svg>
-          {isGoogleLoading ? "Connecting..." : "Google"}
+          {isGoogleLoading ? 'Connecting...' : 'Google'}
         </button>
 
         <button
@@ -101,7 +101,7 @@ export const SocialAuthButtons = ({
               fill="#1877F2"
             />
           </svg>
-          {isFacebookLoading ? "Connecting..." : "Facebook"}
+          {isFacebookLoading ? 'Connecting...' : 'Facebook'}
         </button>
       </div>
     </div>

@@ -1,11 +1,11 @@
 // src/pages/RegisterPage.tsx
-import { Link } from "react-router-dom";
-import { useRegisterForm } from "src/hooks/useRegisterForm";
-import { SocialAuthButtons } from "src/components/auth/SocialAuthButtons";
-import { ErrorMessage } from "src/components/common/ErrorMessage";
-import { ROUTES } from "src/constants/routes";
-import { User, Mail, Lock, Eye, EyeOff } from "lucide-react";
-import "src/styles/auth.css";
+import { Link } from 'react-router-dom';
+import { useRegisterForm } from 'src/hooks/useRegisterForm';
+import { SocialAuthButtons } from 'src/components/auth/SocialAuthButtons';
+import { ErrorMessage } from 'src/components/common/ErrorMessage';
+import Button from 'src/components/common/Button';
+import { ROUTES } from 'src/constants';
+import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export const RegisterPage = () => {
   const {
@@ -29,42 +29,55 @@ export const RegisterPage = () => {
   } = useRegisterForm();
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h1 className="auth-brand">ShopHub</h1>
-          <h2 className="auth-title">Create Account</h2>
-          <p className="auth-subtitle">Sign up to start shopping</p>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-200 px-4 py-8">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl sm:p-10">
+        <div className="mb-8 text-center">
+          <h1 className="mb-6 text-3xl font-bold text-indigo-600">ShopHub</h1>
+          <h2 className="mb-2 text-2xl font-bold text-gray-900">
+            Create Account
+          </h2>
+          <p className="text-sm text-gray-500">Sign up to start shopping</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
           {/* API Error */}
           {apiError && (
-            <div className="error-banner" role="alert">
+            <div
+              className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+              role="alert"
+            >
               {apiError}
             </div>
           )}
 
           {/* Full Name Field */}
-          <div className="form-group">
-            <label htmlFor="fullName" className="form-label">
+          <div className="space-y-2">
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-medium text-gray-700"
+            >
               Full Name
             </label>
-            <div className="input-wrapper">
-              <User className="input-icon" size={20} aria-hidden="true" />
+            <div className="relative">
+              <User
+                className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"
+                size={20}
+                aria-hidden="true"
+              />
               <input
                 id="fullName"
                 type="text"
                 value={fullName}
                 onChange={(e) => {
                   setFullName(e.target.value);
-                  if (errors.name) clearError("name");
+                  if (errors.name) clearError('name');
                 }}
                 placeholder="John Doe"
-                className={`form-input ${errors.name ? "input-error" : ""}`}
+                className={`w-full rounded-xl border py-3 pr-4 pl-12 text-gray-900 placeholder-gray-400 transition-colors focus:border-transparent focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
+                  errors.name ? 'border-red-500' : 'border-gray-200'
+                }`}
                 disabled={isLoading}
                 aria-invalid={!!errors.name}
-                aria-describedby={errors.name ? "fullName-error" : undefined}
               />
             </div>
             {errors.name && (
@@ -73,25 +86,33 @@ export const RegisterPage = () => {
           </div>
 
           {/* Email Field */}
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
+          <div className="space-y-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email Address
             </label>
-            <div className="input-wrapper">
-              <Mail className="input-icon" size={20} aria-hidden="true" />
+            <div className="relative">
+              <Mail
+                className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"
+                size={20}
+                aria-hidden="true"
+              />
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (errors.email) clearError("email");
+                  if (errors.email) clearError('email');
                 }}
                 placeholder="you@example.com"
-                className={`form-input ${errors.email ? "input-error" : ""}`}
+                className={`w-full rounded-xl border py-3 pr-4 pl-12 text-gray-900 placeholder-gray-400 transition-colors focus:border-transparent focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
+                  errors.email ? 'border-red-500' : 'border-gray-200'
+                }`}
                 disabled={isLoading}
                 aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? "email-error" : undefined}
               />
             </div>
             {errors.email && (
@@ -100,33 +121,39 @@ export const RegisterPage = () => {
           </div>
 
           {/* Password Field */}
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
-            <div className="input-wrapper">
-              <Lock className="input-icon" size={20} aria-hidden="true" />
+            <div className="relative">
+              <Lock
+                className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"
+                size={20}
+                aria-hidden="true"
+              />
               <input
                 id="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  if (errors.password) clearError("password");
+                  if (errors.password) clearError('password');
                 }}
                 placeholder="••••••••"
-                className={`form-input ${errors.password ? "input-error" : ""}`}
+                className={`w-full rounded-xl border py-3 pr-12 pl-12 text-gray-900 placeholder-gray-400 transition-colors focus:border-transparent focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
+                  errors.password ? 'border-red-500' : 'border-gray-200'
+                }`}
                 disabled={isLoading}
                 aria-invalid={!!errors.password}
-                aria-describedby={
-                  errors.password ? "password-error" : undefined
-                }
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="password-toggle"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 transition-colors hover:text-indigo-600"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 disabled={isLoading}
               >
                 {showPassword ? (
@@ -142,38 +169,42 @@ export const RegisterPage = () => {
           </div>
 
           {/* Confirm Password Field */}
-          <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">
+          <div className="space-y-2">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
               Confirm Password
             </label>
-            <div className="input-wrapper">
-              <Lock className="input-icon" size={20} aria-hidden="true" />
+            <div className="relative">
+              <Lock
+                className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"
+                size={20}
+                aria-hidden="true"
+              />
               <input
                 id="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
-                  if (errors.confirmPassword) clearError("confirmPassword");
+                  if (errors.confirmPassword) clearError('confirmPassword');
                 }}
                 placeholder="••••••••"
-                className={`form-input ${
-                  errors.confirmPassword ? "input-error" : ""
+                className={`w-full rounded-xl border py-3 pr-12 pl-12 text-gray-900 placeholder-gray-400 transition-colors focus:border-transparent focus:ring-2 focus:ring-indigo-500 focus:outline-none ${
+                  errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
                 }`}
                 disabled={isLoading}
                 aria-invalid={!!errors.confirmPassword}
-                aria-describedby={
-                  errors.confirmPassword ? "confirmPassword-error" : undefined
-                }
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="password-toggle"
+                className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 transition-colors hover:text-indigo-600"
                 aria-label={
                   showConfirmPassword
-                    ? "Hide confirm password"
-                    : "Show confirm password"
+                    ? 'Hide confirm password'
+                    : 'Show confirm password'
                 }
                 disabled={isLoading}
               >
@@ -193,28 +224,28 @@ export const RegisterPage = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="auth-submit-button"
+          <Button
+            title={isLoading ? 'Creating Account...' : 'Sign Up'}
             disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <span className="spinner" aria-hidden="true"></span>
-                Creating Account...
-              </>
-            ) : (
-              "Sign Up"
-            )}
-          </button>
+            loading={isLoading}
+            type="submit"
+            variant="primary"
+            size="lg"
+            otherStyles="w-full py-3.5 text-base font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+          />
 
           {/* Social Auth */}
-          <SocialAuthButtons />
+          <div className="pt-2">
+            <SocialAuthButtons />
+          </div>
 
           {/* Sign In Link */}
-          <p className="auth-footer-text">
-            Already have an account?{" "}
-            <Link to={ROUTES.LOGIN} className="auth-link">
+          <p className="pt-4 text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link
+              to={ROUTES.LOGIN}
+              className="font-semibold text-indigo-600 hover:text-indigo-700 hover:underline"
+            >
               Sign in
             </Link>
           </p>
