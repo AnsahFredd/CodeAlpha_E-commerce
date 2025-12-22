@@ -4,7 +4,7 @@
  */
 
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Youtube, Send } from 'lucide-react';
+import { Twitter, Instagram, Youtube, Send } from 'lucide-react';
 import { useState } from 'react';
 
 const Footer = () => {
@@ -38,15 +38,6 @@ const Footer = () => {
               </p>
               {/* Social Media Icons */}
               <div className="flex gap-4">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition hover:text-indigo-500"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
                 <a
                   href="https://twitter.com"
                   target="_blank"

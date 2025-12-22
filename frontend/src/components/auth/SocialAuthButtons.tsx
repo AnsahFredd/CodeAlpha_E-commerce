@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { signInWithPopup, type AuthProvider } from 'firebase/auth';
-import { auth, googleProvider, facebookProvider } from '../../config/firebase';
+import { auth, googleProvider } from '../../config/firebase';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export const SocialAuthButtons = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const [isFacebookLoading, setIsFacebookLoading] = useState(false);
 
   // Ensure API_URL matches your backend.
   // In production, this should come from import.meta.env.VITE_API_URL
@@ -44,8 +43,6 @@ export const SocialAuthButtons = () => {
 
   const handleGoogleAuth = () =>
     handleFirebaseLogin(googleProvider, setIsGoogleLoading);
-  const handleFacebookAuth = () =>
-    handleFirebaseLogin(facebookProvider, setIsFacebookLoading);
 
   return (
     <div className="mt-6 w-full">
@@ -58,12 +55,12 @@ export const SocialAuthButtons = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="flex flex-col gap-3">
         <button
           type="button"
           onClick={handleGoogleAuth}
-          disabled={isGoogleLoading || isFacebookLoading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50 hover:text-gray-900 hover:shadow disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={isGoogleLoading}
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50 hover:text-gray-900 hover:shadow disabled:cursor-not-allowed disabled:opacity-50"
           aria-label="Sign in with Google"
         >
           {isGoogleLoading ? (
@@ -92,28 +89,7 @@ export const SocialAuthButtons = () => {
               />
             </svg>
           )}
-          <span className="hidden sm:inline">Google</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={handleFacebookAuth}
-          disabled={isGoogleLoading || isFacebookLoading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-[#1877F2] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#166fe5] hover:shadow disabled:cursor-not-allowed disabled:opacity-50"
-          aria-label="Sign in with Facebook"
-        >
-          {isFacebookLoading ? (
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-          ) : (
-            <svg
-              className="h-5 w-5 fill-current"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-            </svg>
-          )}
-          <span className="hidden sm:inline">Facebook</span>
+          <span>Continue with Google</span>
         </button>
       </div>
     </div>

@@ -16,9 +16,6 @@ import productRoutes from './routes/product.routes';
 import cartRoutes from './routes/cart.routes';
 import orderRoutes from './routes/order.routes';
 
-import passport from 'passport';
-import './config/passport';
-
 // Initialize express app
 const app: Application = express();
 
@@ -35,7 +32,6 @@ app.use(
 );
 app.use(express.json()); // Body parser
 app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize());
 
 // Logging in development
 if (process.env.NODE_ENV === 'development') {

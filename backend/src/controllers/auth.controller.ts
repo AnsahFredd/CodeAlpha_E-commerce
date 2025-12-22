@@ -296,37 +296,3 @@ export const firebaseLogin = asyncHandler(
     }
   }
 );
-
-/**
- * @desc    Handle social auth callback
- * @route   GET /api/auth/google/callback OR /api/auth/facebook/callback
- * @access  Public
- */
-export const socialCallback = asyncHandler(
-  async (req: AuthRequest, res: Response) => {
-    // User is populated by passport middleware
-    const user = req.user as any;
-
-    if (!user) {
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/login?error=auth_failed`
-      );
-    }
-
-    // Generate tokens
-    const token = user.generateAuthToken();
-    const refreshToken = user.generateRefreshToken();
-
-    // Save refresh token
-    user.refreshToken = refreshToken;
-    await user.save();
-
-    // Redirect to frontend with tokens
-    // In production, consider using a secure cookie or a temporary code exchange flow if stricter security is needed.
-    // For this implementation, we pass tokens via URL hash or query params.
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-    res.redirect(
-      `${frontendUrl}/login?token=${token}&refreshToken=${refreshToken}`
-    );
-  }
-);

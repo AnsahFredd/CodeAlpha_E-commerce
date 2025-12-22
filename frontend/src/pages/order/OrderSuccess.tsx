@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, ChevronRight, ShoppingBag } from 'lucide-react';
+import { ChevronRight, ShoppingBag } from 'lucide-react';
 
 interface Order {
   id: string;
@@ -16,18 +16,17 @@ interface Order {
 }
 
 const OrdersPage = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-
-  useEffect(() => {
+  const [orders] = useState<Order[]>(() => {
     // Load orders from localStorage
-    const storedOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+    const storedOrders: Order[] = JSON.parse(
+      localStorage.getItem('orders') || '[]'
+    );
     // Sort by date new to old
-    const sortedOrders = storedOrders.sort(
+    return [...storedOrders].sort(
       (a: Order, b: Order) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
-    setOrders(sortedOrders);
-  }, []);
+  });
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {

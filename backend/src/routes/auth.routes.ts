@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import passport from 'passport';
 import {
   register,
   login,
@@ -7,7 +6,6 @@ import {
   updateProfile,
   refreshToken,
   logout,
-  socialCallback,
   firebaseLogin,
 } from '../controllers/auth.controller';
 import { protect } from '../middleware/auth';
@@ -26,34 +24,7 @@ router.post('/login', validate(loginValidator), login);
 router.post('/refresh', refreshToken);
 
 // @route   POST /api/auth/firebase-login
-router.post('/login', firebaseLogin);
-
-// Social Auth Routes
-router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-router.get(
-  '/google/callback',
-  passport.authenticate('google', {
-    session: false,
-    failureRedirect: '/login',
-  }),
-  socialCallback
-);
-
-router.get(
-  '/facebook',
-  passport.authenticate('facebook', { scope: ['email'] })
-);
-router.get(
-  '/facebook/callback',
-  passport.authenticate('facebook', {
-    session: false,
-    failureRedirect: '/login',
-  }),
-  socialCallback
-);
+router.post('/firebase-login', firebaseLogin);
 
 // Protected routes
 router.get('/me', protect, getMe);
