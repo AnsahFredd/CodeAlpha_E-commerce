@@ -49,7 +49,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-5">
             {categories.map((category) => (
               <Link
                 key={category.name}
@@ -103,7 +103,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
             {getCurrentProducts().map((product, index) => {
               const inCart = isInCart(product.id);
               const isOnSale = index === 0;

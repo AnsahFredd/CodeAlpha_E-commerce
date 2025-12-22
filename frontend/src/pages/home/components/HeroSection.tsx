@@ -3,13 +3,13 @@ import heroImage from 'src/assets/images/home/headerimage.png';
 const HeroSection = () => {
   return (
     <div className="min-h-screen w-full bg-linear-to-r from-indigo-600 via-purple-600 to-purple-500 px-4 py-8 sm:px-8 sm:py-16">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 md:flex-row">
         <div className="flex-1 space-y-6 text-white">
           <span className="bg-opacity-20 inline-block rounded-full bg-violet-300 px-6 py-2 text-sm font-medium backdrop-blur-sm">
             New Collection Available
           </span>
 
-          <h1 className="text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl">
             Discover Your Style
           </h1>
 
@@ -44,7 +44,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right Image */}
-        <div className="flex flex-1 justify-center lg:justify-end">
+        <div className="flex flex-1 justify-center md:justify-end">
           <img
             src={heroImage}
             alt="Featured Collection"
