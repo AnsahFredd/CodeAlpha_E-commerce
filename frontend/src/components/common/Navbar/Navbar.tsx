@@ -28,10 +28,6 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="bg-indigo-600 py-1 text-center text-xs font-medium text-white sm:text-sm">
-        Free Shipping on Orders Over $50
-      </div>
-
       <div className="border-b border-gray-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 py-4">
