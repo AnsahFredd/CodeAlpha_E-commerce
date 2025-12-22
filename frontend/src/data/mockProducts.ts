@@ -133,4 +133,68 @@ export const mockProducts: Product[] = [
     category: 'Books',
     stock: 35,
   },
+
+  // Sports Category
+  {
+    id: '13',
+    name: 'Yoga Mat',
+    description:
+      'Non-slip exercise yoga mat with carrying strap. Perfect for yoga, pilates, and floor exercises.',
+    price: 29.99,
+    image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500',
+    category: 'Sports',
+    stock: 60,
+  },
+  {
+    id: '14',
+    name: 'Dumbbell Set',
+    description:
+      'Adjustable dumbbell set for home workouts. Durable and comfortable grip.',
+    price: 89.99,
+    image: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500',
+    category: 'Sports',
+    stock: 25,
+  },
+  {
+    id: '15',
+    name: 'Running Shoes',
+    description:
+      'Lightweight and breathable running shoes with cushioned sole. Ideal for daily runs and training.',
+    price: 79.99,
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
+    category: 'Sports',
+    stock: 40,
+  },
+
+  // Beauty Category
+  {
+    id: '16',
+    name: 'Skincare Set',
+    description:
+      'Complete daily skincare routine set including cleanser, toner, and moisturizer.',
+    price: 65.0,
+    image: 'https://images.unsplash.com/photo-1556228552-523c03539dad?w=500',
+    category: 'Beauty',
+    stock: 55,
+  },
+  {
+    id: '17',
+    name: 'Matte Lipstick',
+    description:
+      'Long-lasting matte lipstick in various shades. Hydrating formula for all-day wear.',
+    price: 18.5,
+    image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500',
+    category: 'Beauty',
+    stock: 100,
+  },
+  {
+    id: '18',
+    name: 'Luxury Perfume',
+    description:
+      'Elegant floral fragrance with notes of jasmine and rose. Long-lasting scent.',
+    price: 120.0,
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500',
+    category: 'Beauty',
+    stock: 30,
+  },
 ];

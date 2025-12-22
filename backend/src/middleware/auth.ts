@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
 
@@ -13,8 +13,8 @@ interface JwtPayload {
   role: string;
 }
 
-export const protect = async (
-  req: AuthRequest,
+export const protect: RequestHandler = async (
+  req: AuthRequest | any,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -73,8 +73,8 @@ export const protect = async (
 };
 
 // Admin authorization middleware
-export const admin = (
-  req: AuthRequest,
+export const admin: RequestHandler = (
+  req: AuthRequest | any,
   res: Response,
   next: NextFunction
 ): void => {

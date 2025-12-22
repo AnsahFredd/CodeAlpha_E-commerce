@@ -1,50 +1,39 @@
-/**
- * Home Page Component - Redesigned to match mockup
- * Features: Category cards with images, Featured products carousel
- */
-
 import { Link } from 'react-router-dom';
 import { useProducts } from 'src/context/ProductContext';
 import { useCart } from 'src/context/CartContext';
-import { ShoppingCart, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { useWishlist } from 'src/context/WishlistContext';
+import {
+  ShoppingCart,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  Heart,
+} from 'lucide-react';
 import { useState } from 'react';
 import HeroSection from './components/HeroSection';
 
 const Home = () => {
-  // Get products and cart functions
   const { products } = useProducts();
   const { addToCart, isInCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
-  // Carousel state for featured products
   const [currentSlide, setCurrentSlide] = useState(0);
   const productsPerSlide = 4;
   const totalSlides = Math.ceil(products.length / productsPerSlide);
 
-  /**
-   * Navigate to next slide
-   */
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
-  /**
-   * Navigate to previous slide
-   */
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
-  /**
-   * Get products for current slide
-   */
   const getCurrentProducts = () => {
     const start = currentSlide * productsPerSlide;
     return products.slice(start, start + productsPerSlide);
   };
 
-  /**
-   * Category data with images and item counts
-   */
   const categories = [
     {
       name: 'Fashion',
@@ -181,20 +170,30 @@ const Home = () => {
                     )}
                     {/* Quick Action Icons */}
                     <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                      <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100">
-                        <svg
-                          className="h-4 w-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                          />
-                        </svg>
+                      <button
+                        onClick={() => {
+                          if (isInWishlist(product.id)) {
+                            removeFromWishlist(product.id);
+                          } else {
+                            addToWishlist(product);
+                          }
+                        }}
+                        className={`flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-md transition-colors hover:bg-gray-100 ${
+                          isInWishlist(product.id)
+                            ? 'text-red-500'
+                            : 'text-gray-400'
+                        }`}
+                        title={
+                          isInWishlist(product.id)
+                            ? 'Remove from Wishlist'
+                            : 'Add to Wishlist'
+                        }
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${
+                            isInWishlist(product.id) ? 'fill-current' : ''
+                          }`}
+                        />
                       </button>
                       <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-md hover:bg-gray-100">
                         <svg

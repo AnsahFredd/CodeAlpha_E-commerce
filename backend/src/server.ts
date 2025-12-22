@@ -1,10 +1,14 @@
-import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
+// Load environment variables immediately
+dotenv.config();
+
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import connectDB from './config/db';
 import { errorHandler } from './middleware/errorHandler';
+import './config/firebase'; // This will initialize Firebase
 
 // Import routes
 import authRoutes from './routes/auth.routes';
@@ -12,8 +16,8 @@ import productRoutes from './routes/product.routes';
 import cartRoutes from './routes/cart.routes';
 import orderRoutes from './routes/order.routes';
 
-// Load environment variables
-dotenv.config();
+import passport from 'passport';
+import './config/passport';
 
 // Initialize express app
 const app: Application = express();
@@ -31,6 +35,7 @@ app.use(
 );
 app.use(express.json()); // Body parser
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 
 // Logging in development
 if (process.env.NODE_ENV === 'development') {

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useProducts } from 'src/context/ProductContext';
 import { useCart } from 'src/context/CartContext';
-import { Link } from 'react-router-dom';
-import { ShoppingCart, Search } from 'lucide-react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { ShoppingCart, Search, Heart } from 'lucide-react';
+import { useWishlist } from 'src/context/WishlistContext';
 import type { Product } from 'src/types/cart';
 
 /**
@@ -14,18 +15,48 @@ const Products = () => {
   // Get products and search/filter functions from context
   const { products, searchProducts, getProductsByCategory, getAllCategories } =
     useProducts();
+  const { category: categorySlug } = useParams<{ category: string }>();
+  const navigate = useNavigate();
 
   // Get cart functions
   const { addToCart, isInCart, getItemQuantity } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
-  // Local state for search and filter
+  // Local state for search
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const categoryMapping: Record<string, string> = {
+    clothing: 'Clothing',
+    electronics: 'Electronics',
+    'home-living': 'Home & Living',
+    sports: 'Sports',
+    beauty: 'Beauty',
+    books: 'Books',
+  };
+
+  const selectedCategory = categorySlug
+    ? categoryMapping[categorySlug] || 'All'
+    : 'All';
 
   /**
    * Get filtered products based on search and category
    * Priority: search query > category filter > all products
    */
+  const handleCategoryClick = (category: string) => {
+    if (category === 'All') {
+      navigate('/products');
+      return;
+    }
+    const slug = Object.keys(categoryMapping).find(
+      (key) => categoryMapping[key] === category
+    );
+    if (slug) {
+      navigate(`/products/${slug}`);
+    } else {
+      navigate(`/products/${category.toLowerCase().replace(/\s+/g, '-')}`);
+    }
+  };
+
   const getFilteredProducts = () => {
     // If there's a search query, use search results
     if (searchQuery.trim()) {
@@ -90,7 +121,7 @@ const Products = () => {
               {categories.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleCategoryClick(category)}
                   className={`rounded-lg px-4 py-2 font-medium transition-colors ${
                     selectedCategory === category
                       ? 'bg-indigo-600 text-white'
@@ -126,12 +157,33 @@ const Products = () => {
                 >
                   {/* Product Image */}
                   <Link to={`/product/${product.id}`}>
-                    <div className="aspect-square overflow-hidden bg-gray-100">
+                    <div className="relative aspect-square overflow-hidden bg-gray-100">
                       <img
                         src={product.image}
                         alt={product.name}
                         className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                       />
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent Link navigation
+                          if (isInWishlist(product.id)) {
+                            removeFromWishlist(product.id);
+                          } else {
+                            addToWishlist(product);
+                          }
+                        }}
+                        className={`absolute top-2 right-2 rounded-full bg-white/90 p-2 shadow-sm transition-all hover:bg-white hover:shadow-md ${
+                          isInWishlist(product.id)
+                            ? 'text-red-500'
+                            : 'text-gray-400 hover:text-red-500'
+                        }`}
+                      >
+                        <Heart
+                          className={`h-5 w-5 ${
+                            isInWishlist(product.id) ? 'fill-current' : ''
+                          }`}
+                        />
+                      </button>
                     </div>
                   </Link>
 
@@ -197,7 +249,7 @@ const Products = () => {
             <button
               onClick={() => {
                 setSearchQuery('');
-                setSelectedCategory('All');
+                navigate('/products');
               }}
               className="mt-4 font-medium text-indigo-600 hover:text-indigo-700"
             >

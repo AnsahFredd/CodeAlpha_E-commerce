@@ -63,7 +63,7 @@ userSchema.methods.comparePassword = async function (
 
 userSchema.methods.generateAuthToken = function (): string {
   const secret = process.env.JWT_SECRET || 'fallback_secret';
-  const expiresIn = process.env.JWT_EXPIRE || '15m';
+  const expiresIn = process.env.JWT_EXPIRE || '24h';
 
   return jwt.sign(
     { id: this._id, email: this.email, role: this.role },

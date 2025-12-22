@@ -9,6 +9,7 @@ import CheckoutPage from './pages/checkout/CheckoutPage';
 import OrderConfirmationPage from './pages/orderConfirmation/OrderConfirmationPage';
 import UserProfilePage from './pages/profile/UserProfilePage';
 import OrderSuccess from './pages/order/OrderSuccess';
+import WishlistPage from './pages/wishlist/WishlistPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { ROUTES } from './constants/';
 
@@ -21,6 +22,8 @@ function App() {
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
         <Route path={ROUTES.PRODUCTS} element={<Products />} />
+        <Route path="/category/:category" element={<Products />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
         <Route path={ROUTES.PRODUCT_DETAILS} element={<ProductDetailsPage />} />
 
         {/* Protected Routes */}

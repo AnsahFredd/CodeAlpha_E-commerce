@@ -1,6 +1,6 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { isAxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ROUTES } from '../constants';
 import {
@@ -38,6 +38,47 @@ export const useLoginForm = (): UseLoginFormReturn => {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Handle Social Login Redirect
+  useEffect(() => {
+    const handleSocialLogin = async () => {
+      const searchParams = new URLSearchParams(location.search);
+      const token = searchParams.get('token');
+      const refreshToken = searchParams.get('refreshToken');
+      const error = searchParams.get('error');
+
+      if (error) {
+        setApiError('Authentication failed. Please try again.');
+        return;
+      }
+
+      if (token && refreshToken) {
+        setIsLoading(true);
+        try {
+          // Temporarily set token for the request
+          localStorage.setItem('token', token);
+          localStorage.setItem('refreshToken', refreshToken);
+
+          // Fetch user details
+          const { user } = await authService.getMe();
+
+          // Complete login
+          login(user, token);
+          navigate(ROUTES.HOME);
+        } catch (err) {
+          console.error('Social login failed:', err);
+          setApiError('Failed to complete social login.');
+          localStorage.removeItem('token');
+          localStorage.removeItem('refreshToken');
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    handleSocialLogin();
+  }, [location.search, login, navigate]);
 
   const validate = () => {
     const emailError = validateEmail(email);

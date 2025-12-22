@@ -6,6 +6,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from 'src/context/ProductContext';
 import { useCart } from 'src/context/CartContext';
+import { useWishlist } from 'src/context/WishlistContext';
 import {
   ShoppingCart,
   Heart,
@@ -23,6 +24,7 @@ const ProductDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const { getProductById, products } = useProducts();
   const { addToCart } = useCart();
+  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
 
   const [quantity, setQuantity] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -174,8 +176,26 @@ const ProductDetailsPage = () => {
                 <ShoppingCart className="h-5 w-5" />
                 Add to Cart
               </button>
-              <button className="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-gray-300 transition hover:border-indigo-600 hover:text-indigo-600">
-                <Heart className="h-6 w-6" />
+              <button
+                onClick={() => {
+                  if (!product) return;
+                  if (isInWishlist(product.id)) {
+                    removeFromWishlist(product.id);
+                  } else {
+                    addToWishlist(product);
+                  }
+                }}
+                className={`flex h-14 w-14 items-center justify-center rounded-xl border-2 transition ${
+                  product && isInWishlist(product.id)
+                    ? 'border-red-500 bg-red-50 text-red-500'
+                    : 'border-gray-300 hover:border-indigo-600 hover:text-indigo-600'
+                }`}
+              >
+                <Heart
+                  className={`h-6 w-6 ${
+                    product && isInWishlist(product.id) ? 'fill-current' : ''
+                  }`}
+                />
               </button>
               <button className="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-gray-300 transition hover:border-indigo-600 hover:text-indigo-600">
                 <Share2 className="h-6 w-6" />

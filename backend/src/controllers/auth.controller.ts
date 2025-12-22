@@ -5,6 +5,7 @@ import { asyncHandler } from '../utils/asyncHandler';
 import { ApiResponse } from '../utils/ApiResponse';
 import { AppError } from '../middleware/errorHandler';
 import jwt from 'jsonwebtoken';
+import { auth as firebaseAuth } from '../config/firebase';
 /**
  * @desc    Register new user
  * @route   POST /api/auth/register
@@ -225,3 +226,107 @@ export const logout = asyncHandler(async (req: AuthRequest, res: Response) => {
 
   res.status(200).json(ApiResponse.success('Logged out successfully'));
 });
+
+/**
+ * @desc    Handle Firebase login/signup
+ * @route   POST /api/auth/firebase-login
+ * @access  Public
+ */
+export const firebaseLogin = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      throw new AppError('Firebase ID token is required', 400);
+    }
+
+    try {
+      // Verify Firebase ID token
+      const decodedToken = await firebaseAuth.verifyIdToken(idToken);
+      const { email, name, picture, uid } = decodedToken;
+
+      if (!email) {
+        throw new AppError('Email not associated with Firebase account', 400);
+      }
+
+      // Check if user exists in MongoDB
+      let user = await User.findOne({ email });
+
+      if (user) {
+        // If user exists, update their profile picture and name if they've changed
+        if (name && user.name !== name) user.name = name;
+        // Optionally update other fields
+      } else {
+        // Create new user
+        user = await User.create({
+          name: name || 'User',
+          email,
+          password: 'firebase-auth-' + uid + '-' + Date.now(), // Placeholder password
+          role: 'user',
+        });
+      }
+
+      // Generate app-specific tokens
+      const token = user.generateAuthToken();
+      const refreshToken = user.generateRefreshToken();
+
+      // Save refresh token
+      user.refreshToken = refreshToken;
+      await user.save();
+
+      res.status(200).json(
+        ApiResponse.success('Firebase login successful', {
+          user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            avatar: picture,
+          },
+          token,
+          refreshToken,
+        })
+      );
+    } catch (error: any) {
+      console.error('Firebase Auth Error:', error);
+      throw new AppError(
+        'Firebase authentication failed: ' + error.message,
+        401
+      );
+    }
+  }
+);
+
+/**
+ * @desc    Handle social auth callback
+ * @route   GET /api/auth/google/callback OR /api/auth/facebook/callback
+ * @access  Public
+ */
+export const socialCallback = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    // User is populated by passport middleware
+    const user = req.user as any;
+
+    if (!user) {
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/login?error=auth_failed`
+      );
+    }
+
+    // Generate tokens
+    const token = user.generateAuthToken();
+    const refreshToken = user.generateRefreshToken();
+
+    // Save refresh token
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    // Redirect to frontend with tokens
+    // In production, consider using a secure cookie or a temporary code exchange flow if stricter security is needed.
+    // For this implementation, we pass tokens via URL hash or query params.
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    res.redirect(
+      `${frontendUrl}/login?token=${token}&refreshToken=${refreshToken}`
+    );
+  }
+);

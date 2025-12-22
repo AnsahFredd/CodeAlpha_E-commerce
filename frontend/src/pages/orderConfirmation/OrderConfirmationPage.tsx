@@ -53,12 +53,8 @@ const OrderConfirmationPage = () => {
     return orders.find((o: Order) => o.id === orderId) || null;
   });
 
-  /**
-   * Load order from localStorage
-   */
   useEffect(() => {
     if (!order) {
-      // Redirect to home if order not found
       const timer = setTimeout(() => navigate('/'), 3000);
       return () => clearTimeout(timer);
     }
