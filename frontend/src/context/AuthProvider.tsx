@@ -9,6 +9,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('token', token);
   };
 
+  const updateUser = (userData: Partial<User>) => {
+    setUser((prev) => (prev ? { ...prev, ...userData } : null));
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('token');
@@ -18,6 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isAuthenticated: !!user,
     user,
     login,
+    updateUser,
     logout,
   };
 

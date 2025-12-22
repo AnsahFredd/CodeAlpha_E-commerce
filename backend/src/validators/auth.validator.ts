@@ -48,4 +48,9 @@ export const updateProfileValidator = [
     .isEmail()
     .withMessage('Please provide a valid email')
     .normalizeEmail(),
+  body('phone').optional().trim(),
+  body('address').optional().trim(),
+  body('city').optional().trim(),
+  body('state').optional().trim(),
+  body('zipCode').optional().trim(),
 ];

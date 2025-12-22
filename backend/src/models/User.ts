@@ -8,6 +8,11 @@ export interface IUser extends Document {
   password: string;
   role: 'user' | 'admin';
   refreshToken?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -44,6 +49,11 @@ const userSchema = new Schema<IUser>(
       type: String,
       select: false,
     },
+    phone: String,
+    address: String,
+    city: String,
+    state: String,
+    zipCode: String,
   },
   { timestamps: true }
 );

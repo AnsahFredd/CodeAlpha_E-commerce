@@ -1,8 +1,3 @@
-/**
- * Navbar Component - Redesigned to match mockup
- * Features: Responsive design with mobile menu, search, and user actions
- */
-
 import { useState } from 'react';
 import { NAV_ITEMS } from './navItems';
 import { Link, useLocation } from 'react-router-dom';
@@ -33,7 +28,6 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
-      {/* Promotional Banner */}
       <div className="bg-indigo-600 py-1 text-center text-xs font-medium text-white sm:text-sm">
         Free Shipping on Orders Over $50
       </div>
@@ -41,7 +35,6 @@ const Navbar = () => {
       <div className="border-b border-gray-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between gap-4 py-4">
-            {/* Logo */}
             <Link to="/" className="flex flex-shrink-0 items-center gap-2">
               <ShoppingCart className="h-7 w-7 text-indigo-600" />
               <h1 className="hidden text-xl font-bold text-gray-900 sm:block">
@@ -49,7 +42,6 @@ const Navbar = () => {
               </h1>
             </Link>
 
-            {/* Desktop Search Bar */}
             <div className="hidden max-w-2xl flex-1 px-8 md:block">
               <div className="relative">
                 <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -61,9 +53,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Right Side Actions */}
             <div className="flex flex-shrink-0 items-center gap-4 sm:gap-6">
-              {/* Desktop User Actions */}
               <div className="hidden items-center gap-6 md:flex">
                 {!isAuthenticated ? (
                   <Link
@@ -100,7 +90,6 @@ const Navbar = () => {
                 </Link>
               </div>
 
-              {/* Cart Button (Always Visible) */}
               <Link
                 to="/cart"
                 className="relative text-gray-700 transition hover:text-indigo-600"
@@ -114,7 +103,6 @@ const Navbar = () => {
                 )}
               </Link>
 
-              {/* Mobile Menu Toggle */}
               <button
                 className="text-gray-700 transition hover:text-indigo-600 md:hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -128,7 +116,6 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Search Bar (Only visible on small screens) */}
           <div className="pb-4 md:hidden">
             <div className="relative">
               <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
@@ -142,7 +129,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Desktop Navigation Categories */}
       <div className="hidden border-b border-gray-200 bg-white md:block">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="py-3">
@@ -169,11 +155,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
         <div className="absolute left-0 z-40 w-full border-b border-gray-200 bg-white shadow-lg md:hidden">
           <div className="space-y-4 px-4 py-4">
-            {/* Mobile Navigation Links */}
             <nav>
               <ul className="space-y-2">
                 {NAV_ITEMS.map((item) => {
@@ -198,7 +182,6 @@ const Navbar = () => {
             </nav>
 
             <div className="space-y-4 border-t border-gray-200 pt-4">
-              {/* Mobile User Actions */}
               {!isAuthenticated ? (
                 <Link
                   to="/login"

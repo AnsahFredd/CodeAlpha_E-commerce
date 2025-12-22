@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import HeroSection from './components/HeroSection';
+import { categories } from './constants';
 
 const Home = () => {
   const { products } = useProducts();
@@ -34,50 +35,11 @@ const Home = () => {
     return products.slice(start, start + productsPerSlide);
   };
 
-  const categories = [
-    {
-      name: 'Fashion',
-      image:
-        'https://images.unsplash.com/photo-1445205170230-053b83016050?w=400',
-      items: 234,
-      path: '/category/clothing',
-    },
-    {
-      name: 'Electronics',
-      image:
-        'https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400',
-      items: 189,
-      path: '/category/electronics',
-    },
-    {
-      name: 'Home & Living',
-      image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400',
-      items: 156,
-      path: '/category/home-living',
-    },
-    {
-      name: 'Sports & Fitness',
-      image:
-        'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400',
-      items: 98,
-      path: '/category/sports',
-    },
-    {
-      name: 'Beauty & Health',
-      image:
-        'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400',
-      items: 127,
-      path: '/category/beauty',
-    },
-  ];
-
   return (
     <div className="w-full bg-gray-50">
       <HeroSection />
-      {/* Shop by Category Section */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
           <div className="mb-12 text-center">
             <h2 className="mb-2 text-3xl font-bold text-gray-900">
               Shop by Category
@@ -87,7 +49,6 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Category Cards Grid */}
           <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-5">
             {categories.map((category) => (
               <Link
@@ -95,15 +56,12 @@ const Home = () => {
                 to={category.path}
                 className="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-gray-900"
               >
-                {/* Category Image */}
                 <img
                   src={category.image}
                   alt={category.name}
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                {/* Dark Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                {/* Category Info */}
                 <div className="absolute right-0 bottom-0 left-0 p-4 text-white sm:p-6">
                   <h3 className="mb-1 text-xl font-bold">{category.name}</h3>
                   <p className="text-sm text-gray-300">
@@ -116,10 +74,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Products Section */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Section Header with Navigation */}
           <div className="mb-8 flex items-center justify-between">
             <div>
               <h2 className="mb-2 text-3xl font-bold text-gray-900">
@@ -129,7 +85,6 @@ const Home = () => {
                 Handpicked selection of our best products
               </p>
             </div>
-            {/* Carousel Navigation Arrows */}
             <div className="flex gap-2">
               <button
                 onClick={prevSlide}
@@ -148,11 +103,9 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Products Carousel */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {getCurrentProducts().map((product, index) => {
               const inCart = isInCart(product.id);
-              // Show SALE badge on first product
               const isOnSale = index === 0;
 
               return (
@@ -160,15 +113,12 @@ const Home = () => {
                   key={product.id}
                   className="group overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-lg"
                 >
-                  {/* Product Image Container */}
                   <div className="relative aspect-square overflow-hidden bg-gray-100">
-                    {/* SALE Badge */}
                     {isOnSale && (
                       <div className="absolute top-3 left-3 z-10 rounded-md bg-red-500 px-3 py-1 text-xs font-bold text-white">
                         SALE
                       </div>
                     )}
-                    {/* Quick Action Icons */}
                     <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                       <button
                         onClick={() => {
@@ -217,7 +167,6 @@ const Home = () => {
                         </svg>
                       </button>
                     </div>
-                    {/* Product Image */}
                     <Link to={`/product/${product.id}`}>
                       <img
                         src={product.image}
@@ -227,19 +176,15 @@ const Home = () => {
                     </Link>
                   </div>
 
-                  {/* Product Info */}
                   <div className="p-4">
-                    {/* Category */}
                     <p className="mb-2 text-xs tracking-wide text-gray-500 uppercase">
                       {product.category}
                     </p>
-                    {/* Product Name */}
                     <Link to={`/product/${product.id}`}>
                       <h3 className="mb-2 line-clamp-1 text-base font-semibold text-gray-900 transition hover:text-indigo-600">
                         {product.name}
                       </h3>
                     </Link>
-                    {/* Rating */}
                     <div className="mb-3 flex items-center gap-1">
                       {[1, 2, 3, 4].map((star) => (
                         <Star
@@ -250,7 +195,6 @@ const Home = () => {
                       <Star className="h-4 w-4 text-gray-300" />
                       <span className="ml-1 text-xs text-gray-500">(328)</span>
                     </div>
-                    {/* Price and Cart Button */}
                     <div className="flex items-center justify-between">
                       <div>
                         {isOnSale && (

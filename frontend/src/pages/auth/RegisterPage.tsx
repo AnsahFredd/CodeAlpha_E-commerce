@@ -1,4 +1,3 @@
-// src/pages/RegisterPage.tsx
 import { Link } from 'react-router-dom';
 import { useRegisterForm } from 'src/hooks/useRegisterForm';
 import { SocialAuthButtons } from 'src/components/auth/SocialAuthButtons';
@@ -40,7 +39,6 @@ export const RegisterPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-          {/* API Error */}
           {apiError && (
             <div
               className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
@@ -50,7 +48,6 @@ export const RegisterPage = () => {
             </div>
           )}
 
-          {/* Full Name Field */}
           <div className="space-y-2">
             <label
               htmlFor="fullName"
@@ -85,7 +82,6 @@ export const RegisterPage = () => {
             )}
           </div>
 
-          {/* Email Field */}
           <div className="space-y-2">
             <label
               htmlFor="email"
@@ -120,7 +116,6 @@ export const RegisterPage = () => {
             )}
           </div>
 
-          {/* Password Field */}
           <div className="space-y-2">
             <label
               htmlFor="password"
@@ -168,7 +163,6 @@ export const RegisterPage = () => {
             )}
           </div>
 
-          {/* Confirm Password Field */}
           <div className="space-y-2">
             <label
               htmlFor="confirmPassword"
@@ -223,7 +217,6 @@ export const RegisterPage = () => {
             )}
           </div>
 
-          {/* Submit Button */}
           <Button
             title={isLoading ? 'Creating Account...' : 'Sign Up'}
             disabled={isLoading}
@@ -234,12 +227,10 @@ export const RegisterPage = () => {
             otherStyles="w-full py-3.5 text-base font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
           />
 
-          {/* Social Auth */}
           <div className="pt-2">
             <SocialAuthButtons />
           </div>
 
-          {/* Sign In Link */}
           <p className="pt-4 text-center text-sm text-gray-600">
             Already have an account?{' '}
             <Link

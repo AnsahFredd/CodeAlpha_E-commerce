@@ -1,6 +1,8 @@
 import { createContext, useContext } from 'react';
 import type { CartItem, Product } from '../types/cart';
 
+export type { CartItem, Product };
+
 /**
  * Cart Context Type Definition
  * Defines all the functions and state available to components using the cart

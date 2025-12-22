@@ -4,7 +4,6 @@ const HeroSection = () => {
   return (
     <div className="min-h-screen w-full bg-linear-to-r from-indigo-600 via-purple-600 to-purple-500 px-4 py-8 sm:px-8 sm:py-16">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
-        {/* Left Content */}
         <div className="flex-1 space-y-6 text-white">
           <span className="bg-opacity-20 inline-block rounded-full bg-violet-300 px-6 py-2 text-sm font-medium backdrop-blur-sm">
             New Collection Available

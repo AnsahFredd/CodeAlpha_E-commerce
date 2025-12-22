@@ -112,6 +112,11 @@ export const getMe = asyncHandler(async (req: AuthRequest, res: Response) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        state: user.state,
+        zipCode: user.zipCode,
         createdAt: user.createdAt,
       },
     })
@@ -125,7 +130,7 @@ export const getMe = asyncHandler(async (req: AuthRequest, res: Response) => {
  */
 export const updateProfile = asyncHandler(
   async (req: AuthRequest, res: Response) => {
-    const { name, email } = req.body;
+    const { name, email, phone, address, city, state, zipCode } = req.body;
 
     const user = await User.findById(req.user?._id);
 
@@ -146,6 +151,12 @@ export const updateProfile = asyncHandler(
       user.name = name;
     }
 
+    if (phone !== undefined) user.phone = phone;
+    if (address !== undefined) user.address = address;
+    if (city !== undefined) user.city = city;
+    if (state !== undefined) user.state = state;
+    if (zipCode !== undefined) user.zipCode = zipCode;
+
     await user.save();
 
     res.status(200).json(
@@ -155,6 +166,11 @@ export const updateProfile = asyncHandler(
           name: user.name,
           email: user.email,
           role: user.role,
+          phone: user.phone,
+          address: user.address,
+          city: user.city,
+          state: user.state,
+          zipCode: user.zipCode,
         },
       })
     );
