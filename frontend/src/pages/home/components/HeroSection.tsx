@@ -18,8 +18,8 @@ const HeroSection = () => {
             products. Quality guaranteed, prices unbeatable.
           </p>
 
-          <div className="flex justify-center gap-4 pt-4 lg:justify-start">
-            <button className="hover:bg-opacity-90 flex cursor-pointer items-center gap-2 rounded-lg bg-white px-8 py-3 font-semibold text-purple-600 transition">
+          <div className="flex flex-col justify-center gap-4 pt-4 sm:flex-row lg:justify-start">
+            <button className="hover:bg-opacity-90 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-white px-8 py-3 font-semibold text-purple-600 transition sm:w-auto">
               Shop Now
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ const HeroSection = () => {
               </svg>
             </button>
 
-            <button className="cursor-pointer rounded-lg border-2 border-white px-8 py-3 font-semibold text-white transition hover:bg-white hover:text-purple-600">
+            <button className="w-full cursor-pointer rounded-lg border-2 border-white px-8 py-3 font-semibold text-white transition hover:bg-white hover:text-purple-600 sm:w-auto">
               View Featured
             </button>
           </div>
