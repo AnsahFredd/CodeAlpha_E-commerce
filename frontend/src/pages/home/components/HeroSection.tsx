@@ -3,8 +3,8 @@ import heroImage from 'src/assets/images/home/headerimage.png';
 const HeroSection = () => {
   return (
     <div className="min-h-screen w-full bg-linear-to-r from-indigo-600 via-purple-600 to-purple-500 px-4 py-8 sm:px-8 sm:py-16">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 md:flex-row">
-        <div className="flex-1 space-y-6 text-white">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
+        <div className="flex-1 space-y-6 text-center text-white lg:text-left">
           <span className="bg-opacity-20 inline-block rounded-full bg-violet-300 px-6 py-2 text-sm font-medium backdrop-blur-sm">
             New Collection Available
           </span>
@@ -13,12 +13,12 @@ const HeroSection = () => {
             Discover Your Style
           </h1>
 
-          <p className="text-opacity-90 max-w-xl text-lg text-white">
+          <p className="text-opacity-90 mx-auto max-w-xl text-lg text-white lg:mx-0">
             Shop the latest trends in fashion, electronics, and lifestyle
             products. Quality guaranteed, prices unbeatable.
           </p>
 
-          <div className="flex gap-4 pt-4">
+          <div className="flex justify-center gap-4 pt-4 lg:justify-start">
             <button className="hover:bg-opacity-90 flex cursor-pointer items-center gap-2 rounded-lg bg-white px-8 py-3 font-semibold text-purple-600 transition">
               Shop Now
               <svg
@@ -44,7 +44,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right Image */}
-        <div className="flex flex-1 justify-center md:justify-end">
+        <div className="flex flex-1 justify-center lg:justify-end">
           <img
             src={heroImage}
             alt="Featured Collection"
